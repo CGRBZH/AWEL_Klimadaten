@@ -7,5 +7,15 @@ AWS_DEFAULT_REGION = "eu-central-1"
 Sys.setenv(TZ = "GMT")
 Sys.setenv(ORA_SDTZ = "GMT")
 
-Sys.setenv(https_proxy="proxy.kt.ktzh.ch:8080")
-Sys.setenv(http_proxy="proxy.kt.ktzh.ch:8080")
+# Sys.setenv(https_proxy="proxy.kt.ktzh.ch:8080")
+# Sys.setenv(http_proxy="proxy.kt.ktzh.ch:8080")
+# 
+# if (requireNamespace("httr") && requireNamespace("curl")) {
+#   message("set httr options")
+#   httr::set_config(httr::config(
+#     proxy = curl::ie_get_proxy_for_url(),
+#     proxyauth = 8,
+#     proxyuserpwd = ":",
+#     ssl_verifypeer = 0
+#   ))
+# }

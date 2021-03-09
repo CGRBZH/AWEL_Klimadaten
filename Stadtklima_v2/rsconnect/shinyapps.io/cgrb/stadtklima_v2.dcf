@@ -1,0 +1,12 @@
+name: stadtklima_v2
+title:
+username:
+account: cgrb
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3721934
+bundleId: 4291051
+url: https://cgrb.shinyapps.io/stadtklima_v2/
+when: 1614701008.27276
+asMultiple: FALSE
+asStatic: FALSE

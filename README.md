@@ -91,7 +91,8 @@ Several resources proved invaluable when building this app, including:
 - The [COVID-19 tracker](https://vac-lshtm.shinyapps.io/ncov_tracker/) app and [associated code](https://github.com/eparker12/nCoV_tracker);
 - The [RStudio Leaflet tutorials](https://rstudio.github.io/leaflet/);
 - The [RStudio Shiny examples](https://github.com/rstudio/shiny-examples);
-- The general [RStudio Shiny tutorial](https://shiny.rstudio.com/tutorial/).
+- The general [RStudio Shiny tutorial](https://shiny.rstudio.com/tutorial/);
+- [Using Leaflet with Shiny](https://rstudio.github.io/leaflet/shiny.html).
 
 
 

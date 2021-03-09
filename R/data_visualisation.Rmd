@@ -1,0 +1,126 @@
+---
+title: "data_visualisation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+require(leaflet)
+require(dplyr)
+
+```
+
+# Create a Leaflet map of weather stations
+
+```{r data import}
+klima <- readRDS("C:/gitrepos/AWEL_Interaktive_Stadtklima_Auswertungen/output/stadtklima_daten.RDS")
+monatswerte <- readRDS("C:/gitrepos/AWEL_Interaktive_Stadtklima_Auswertungen/output/monatswerte_stadtklima.RDS")
+
+```
+
+Reference for color scale and bins: https://www.meteoschweiz.admin.ch/home/messwerte.html?param=messwerte-lufttemperatur-10min
+
+```{r color palette}
+# Color palette: Continuous input, continuous color scale (14 colors - BluRd)
+# diverging_colors <- c("#407B9F", "#3F8AB4", "#3F98CC", "#5FA9D3", "#7FB9DD", "#9FCBE5", "#BFDCED", "#f6c5cb", "#f1a8b2", "#ec8c99", "#e76c7b", "#d84f60", "#b74451", "#983844")
+
+# Color palette: Continuous input, discrete color scale (20 colors - BluRd)
+diverging20 <- c("#071e46", "#072f6b", "#08529c", "#2171b5", "#4292c7", "#5aa0cd", "#78bfd6", "#aadce6", "#dbf5ff", "#f0fcff",
+                 "#fff0f5", "#ffe0e0", "#fcbbaa", "#fc9272", "#fb6a4a", "#f03c2b", "#cc181e", "#a60f14", "#780a0f", "#5f0000")
+
+# npal <- colorNumeric(palette = diverging_colors,
+#                      domain = klima$temperature,
+#                      na.color = "#cccccc")
+
+binpal <- colorBin(palette = diverging20,
+                   bins = c(-999, -35, -30, -25, -20, -15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15, 20, 25, 30, 35, 999),
+                   domain = klima$temperature,
+                   na.color = "#cccccc" )
+
+```
+
+```{r legend labels}
+
+labels <- c("< -35 °C", "-35 bis -30 °C", "-30 bis -25 °C", "-25 bis -20 °C", "-20 bis -15 °C", "-15 bis -12 °C",
+                              "-12 bis -9 °C", "-9 bis -6 °C", "-6 bis -3 °C", "-3 bis 0 °C", "0 bis 3 °C", "3 bis 6 °C", 
+                              "6 bis 9 °C", "9 bis 12 °C", "12 bis 15 °C", "15 bis 20 °C", "20 bis 25 °C", "25 bis 30 °C",
+                              "30 bis 35 °C", "> 35 °C")
+
+```
+
+```{r}
+
+klima_current_state = subset(klima, date==max(klima$date))
+
+```
+
+Reference: Adding custom legend labels to Leaflet (https://stackoverflow.com/questions/38161073/manually-adding-legend-values-in-leaflet#comment63910354_38235047)
+
+Reference: Use C-Style String Formatting Commands https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/sprintf
+
+```{r map}
+
+# Create a map widget by calling leaflet()
+map <- leaflet(monatswerte %>% filter(year == 2020 & month == "08")) %>%
+
+  # Set default view and zoom level
+  # Kanton Zürich: lng: 7.5929 - 9.7490; lat: 47.8095 - 47.0430
+  setView(lng = mean(c(7.5929,9.7490)), lat = mean(c(47.8095,47.0430)), zoom = 10) %>% 
+
+  # Add layers to the map by using layer functions (e.g. addTiles, addMarkers, addPolygons) to modify the map widget
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  # addTiles() %>%  # Add default OpenStreetMap map tiles
+  # Overlay groups
+  addCircleMarkers(lng= ~E, lat= ~N, 
+                             color = ~binpal(monthly_min_temp), 
+                             radius = 4,
+                             fillOpacity = 0.5,
+                             stroke = FALSE,
+                             group = "Tiefsttemperatur",
+                             label = sprintf("<strong>%s (%1.f)</strong><br/>
+                                             Monat: %09s %s<br/>
+                                             Tiefsttemp.: %5.1f °C<br/>
+                                             Höchsttemp.: %5.1f °C<br/>
+                                             Anz. Hitzetage: %1.f<br/> 
+                                             Anz. Tropennächte: %1.f",  
+                                             monatswerte$site, 
+                                             monatswerte$sensor, 
+                                             monatswerte$month,
+                                             monatswerte$year,
+                                             monatswerte$monthly_min_temp, 
+                                             monatswerte$monthly_max_temp, 
+                                             monatswerte$n_hitzetage,
+                                             monatswerte$n_tropennacht) %>% lapply(htmltools::HTML),
+                             labelOptions = labelOptions(
+                                 style = list("font-weight" = "normal", padding = "3px 8px", "color" = "#cccccc"),
+                                 textsize = "15px", direction = "auto")) %>%
+  addCircleMarkers(lng= ~E, lat= ~N, 
+                   color = ~binpal(monthly_max_temp), 
+                   radius = 4,
+                   fillOpacity = 0.5,
+                   stroke = FALSE,
+                   group = "Höchststemperatur",
+                   label = sprintf("<strong>%s (Messstation)</strong><br/>Monat: %s<br/>Tiefsttemp.: %5.1f<br/>Höchsttemp.: %5.1f", monatswerte$site, monatswerte$month, monatswerte$monthly_min_temp, monatswerte$monthly_max_temp) %>% lapply(htmltools::HTML),
+                             labelOptions = labelOptions(
+                                 style = list("font-weight" = "normal", padding = "3px 8px", "color" = "#cccccc"),
+                                 textsize = "15px", direction = "auto")) %>%
+  addLegend(position = "topright",
+            colors =  diverging20,
+            data = klima,
+            values =  ~klima$temperature,
+            labels = labels,
+            title = "Temperatur",
+            opacity = 1,
+            group = c("Tiefsttemperatur", "Höchststemperatur")
+  ) %>%
+  # Layers control
+  addLayersControl(position = "bottomright",
+    overlayGroups = c("Tiefsttemperatur", "Höchststemperatur"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) 
+  
+# 3. Print the map widget to display it --> map tiles will not lead within proxy restrictions
+map  
+
+```
