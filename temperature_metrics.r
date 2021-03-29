@@ -22,7 +22,6 @@
 
 # temperature_metrics <- function(data, temperature, date = as_date(starttime), site, sensor)
 
-
 require(tidyverse)
 
 temperature_metrics <- function(df, var, ...) {
@@ -31,9 +30,9 @@ temperature_metrics <- function(df, var, ...) {
   df %>%  
     group_by(!!!group_by) %>%  
     dplyr::summarise( 
-      T_min = min(!!var, na.rm = TRUE), 
-      T_max = max(!!var, na.rm = TRUE), 
-      T_mean = mean(!!var, na.rm = TRUE), 
+      T_min = round(min(!!var, na.rm = TRUE),1), 
+      T_max = round(max(!!var, na.rm = TRUE),1), 
+      T_mean = round(mean(!!var, na.rm = TRUE),1), 
       T_sd = sd(!!var, na.rm = TRUE), 
       T_median = median(!!var, na.rm = TRUE), 
       Hitzetag = ifelse(T_max > 30, TRUE, FALSE), 

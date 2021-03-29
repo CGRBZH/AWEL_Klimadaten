@@ -1,21 +1,12 @@
 # rOstluft AWS
-AWS_ACCESS_KEY_ID = "AKIA4ANHOQO6LF2HWU6J"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_DEFAULT_REGION = "eu-central-1"
+# No open access. Credentials required.
+AWS_ACCESS_KEY_ID = "ACCESSKEY"
+AWS_SECRET_ACCESS_KEY = "SECRETKEY"
+AWS_DEFAULT_REGION = "REGION"
 
-# Zeitzone GMT (synchron mit DB)
+# Time zone GMT (synchron mit DB)
 Sys.setenv(TZ = "GMT")
 Sys.setenv(ORA_SDTZ = "GMT")
 
-# Sys.setenv(https_proxy="proxy.kt.ktzh.ch:8080")
-# Sys.setenv(http_proxy="proxy.kt.ktzh.ch:8080")
-# 
-# if (requireNamespace("httr") && requireNamespace("curl")) {
-#   message("set httr options")
-#   httr::set_config(httr::config(
-#     proxy = curl::ie_get_proxy_for_url(),
-#     proxyauth = 8,
-#     proxyuserpwd = ":",
-#     ssl_verifypeer = 0
-#   ))
-# }
+# Leunet proxy settings
+# When working from within Leunet, you'll have to define your proxy settings

@@ -2,10 +2,16 @@
 # R.Version() --> "R version 4.0.2 (2020-06-22)"
 
 # 2. Load required packages
+require("shinyWidgets")
+require("shinydashboard")
+require("shinythemes")
+require("shinycssloaders")
+
 require(rOstluft) # Version ‘1.4.0’
 require(rOstluft.plot)
 require(data.table) #Version ‘1.13.4’
 require(readr) # Version ‘1.3.1’
+require(tidyverse)
 require(dplyr) # Verion ‘1.0.0’
 require(tidyr) # Version ‘1.1.0’
 require(lubridate) # Version ‘1.7.9’
@@ -18,11 +24,6 @@ require(tmaptools)
 require(leaflet)
 require(htmlTable)
 require(DT)
-require(ggridges)
 
-install.packages("shinyWidgets")
-install.packages("shinydashboard")
-install.packages("shinythemes")
-install.packages('slickR')
-install.packages('svglite')
+
 

@@ -1,8 +1,47 @@
+#loading-content {
+  position: absolute;
+  background: #393a35;
+  opacity: 1;
+  z-index: 100;
+  left: 0;
+  right: 0;
+  height: 100%;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.popover {
+  max-width: 600px;
+}
+
+.popover-title {
+  font-weight: bold;
+}
+
+.popover-link {
+  color: #444;
+  font-size: 16px;
+}
+
+.popover-link > .fa {
+  vertical-align: top;
+}
+
+#hitzetageDesc {
+  font-weight: bold;
+  margin-bottom: -30px;
+}
+
+#hitzetageDesc .popover-link {
+  position: relative;
+  z-index: 1;
+}
+
 input[type="number"] {
   max-width: 80%;
 }
 
-div.outer {
+.outer {
   position: fixed;
   top: 56px;
   left: 0;
@@ -17,7 +56,7 @@ body, label, input, button, select {
   font-family: 'Helvetica Neue', Helvetica;
   
 }
-h1, h2, h3, h4, h5, h6 { font-weight: 400; }
+h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 
 #controls {
   /* Appearance */
@@ -58,3 +97,89 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; }
              left:2.5%;
              
              }
+             
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus {
+  border-top: 2px solid #f9c74f;
+  border-bottom: 0;
+  font-weight: bold;
+}
+
+.nav-tabs>li {
+  margin-left: 7px;
+}
+
+.nav-tabs>li>a {
+  background-color: #f8f8f8;
+  border: 1px solid #dddddd;
+}
+
+.nav>li>a:hover,
+.nav>li>a:focus {
+  background-color: #dddddd;
+}
+
+/* Navbar */
+
+.navbar-brand {
+  padding: 17px 17px;
+  height: 56px;
+  margin-top: 2px;
+}
+
+.navbar-inverse {
+  background: #201a16;
+  margin-bottom: 0;
+  /* box-shadow: 0 0 10px #222; */
+}
+.navbar-inverse .navbar-nav>li>a {
+  color: #9c9999;
+  font-family: "Helvetica", "Arial";
+}
+.navbar .fa-fw {
+  margin-right: -1px;
+}
+.navbar {
+  font-size: 16px;
+}
+.navbar-nav>li>a {
+  padding-top: 17px;
+  padding-bottom: 17px;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+  border-top: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.active>a:hover,
+.navbar-inverse .navbar-nav>.active>a:focus {
+  border-top-color: #201a16; /* #0647d2; */
+  background: #fff;
+  color: #201a16;
+  cursor: default;
+  transition: background 0.3s;
+}
+
+/* Animated underline for the main nav */
+
+.navbar .navbar-nav>li>a:after {
+	content: '';
+	display: block;
+	margin: auto;
+	margin-top: 1px;
+	height: 2px;
+	width: 0;
+	background: transparent;
+	transition: width .3s ease, background-color .3s ease;
+}
+.navbar .navbar-nav>li>a:hover:after {
+	width: 100%;
+	background: #fff;
+}
+.navbar .navbar-nav>.active>a:hover:after {
+	width: 0;
+	background: transparent;
+}
